@@ -1,0 +1,26 @@
+.category-item {
+    font-size: 1.6rem;
+    cursor: pointer;
+    i {
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+    }
+    .category-item--lvl1 {
+        margin-left: 2rem;
+        font-size: 1.4rem;
+        &.active {
+            color: red;
+        }
+        &.inactive {
+            color: $text-black;
+        }
+    }
+    .category-item__list--lvl1 {
+        display: none;
+        visibility: hidden;
+    }
+    .category-item__list--lvl1.active {
+        display: block;
+        visibility: visible;
+    }
+}
