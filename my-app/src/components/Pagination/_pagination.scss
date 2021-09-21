@@ -1,0 +1,20 @@
+.pagination-main {
+    background-color: rgba($color: $gray-color, $alpha: 0.4);
+    ul {
+        display: flex;
+        li {
+            padding: 0 1rem;
+            &.selected {
+                a {
+                    font-weight: bold;
+                    color: $text-black;
+                }
+            }
+            a {
+                font-size: 2rem;
+                background-color: unset;
+                border: none;
+            }
+        }
+    }
+}

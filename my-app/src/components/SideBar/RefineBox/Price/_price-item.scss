@@ -1,0 +1,11 @@
+.price-item {
+    .price-link {
+        color: $text-black;
+        text-decoration: none;
+        font-size: 1.4rem;
+    }
+
+    &.active a {
+        color: red;
+    }
+}

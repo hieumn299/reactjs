@@ -1,0 +1,16 @@
+.sidebar {
+    position: absolute;
+    overflow-y: auto;
+    top: 0;
+    height: 100vh;
+    left: 0;
+    bottom: 0;
+    width: 28rem;
+    padding: 2rem;
+    border-right: 1px solid #eee;
+
+    .filter-wrapper__title {
+        font-size: 1.6rem;
+        font-weight: bold;
+    }
+}
