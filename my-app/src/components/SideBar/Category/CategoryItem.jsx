@@ -1,30 +1,47 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { changeCategory } from "../../../reducer/filter.slice";
+import { changeCategorySidebar } from "../../../reducer/sidebar.slice";
 
-function CategoryItem(props) {
+function CategoryItem({ category, isClear }) {
+    const dispatch = useDispatch();
     const [checkActive, setCheckActive] = useState();
     const [checkItem, setCheckItem] = useState(false);
     const [toggleFilter, setToggleFilter] = useState({
         lvl0: "",
         lvl1: ""
     });
-
+    if (
+        isClear === true &&
+        toggleFilter.lvl0 !== "" &&
+        toggleFilter.lvl1 !== ""
+    ) {
+        setCheckActive();
+        setToggleFilter({
+            lvl0: "",
+            lvl1: ""
+        });
+        setCheckItem(false);
+    }
     const handleClick = (item) => {
         if (item !== toggleFilter.lvl0) {
             setToggleFilter({
                 ...toggleFilter,
                 lvl0: item
             });
-            props.handleChangeCategories(item);
+            dispatch(changeCategory(item));
+            dispatch(changeCategorySidebar(item));
         } else {
             setToggleFilter({
                 ...toggleFilter,
                 lvl0: ""
             });
-            props.handleChangeCategories(null);
+            dispatch(changeCategory(""));
+            dispatch(changeCategorySidebar(""));
         }
         setCheckItem(!checkItem);
     };
-    const handleFilterCategories = (item, index) => {
+    const handleFilterCategories = (item) => {
         if (item === checkActive) {
             setCheckActive(null);
         } else {
@@ -35,20 +52,22 @@ function CategoryItem(props) {
                 ...toggleFilter,
                 lvl1: item
             });
-            props.handleChangeCategories(item);
+            dispatch(changeCategory(item));
+            dispatch(changeCategorySidebar(item));
         } else {
             setToggleFilter({
                 ...toggleFilter,
                 lvl1: ""
             });
-            props.handleChangeCategories(toggleFilter.lvl0);
+            dispatch(changeCategory(toggleFilter.lvl0));
+            dispatch(changeCategorySidebar(toggleFilter.lvl0));
         }
     };
-    const { lvl0, lvl1 } = props.category;
+    const { lvl0, lvl1 } = category;
     const renderCategoriesSmall = (data) => {
         let result = "";
         if (data.length > 0) {
-            result = data.map((item, index) => {
+            result = data.map((item) => {
                 if (item !== "") {
                     return (
                         <div
@@ -56,7 +75,7 @@ function CategoryItem(props) {
                                 item === checkActive ? "active" : "inactive"
                             }`}
                             key={item.replace(/\s+/g, "")}
-                            onClick={() => handleFilterCategories(item, index)}
+                            onClick={() => handleFilterCategories(item)}
                         >
                             <i className="fas fa-chevron-right"></i>
                             <span>{item}</span>

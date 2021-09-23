@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useDispatch } from "react-redux";
+import { changePriceInput } from "../../reducer/filter.slice";
 
-function FormSearchPrice(props) {
+function FormSearchPrice({ isClear }) {
+    const dispatch = useDispatch();
     const [price, setPrice] = useState({
         start: "",
         end: ""
     });
-    if (props.isClear && price.start !== "" && price.end !== "") {
+    if (isClear && price.start !== "" && price.end !== "") {
         setPrice({
             start: "",
             end: ""
@@ -29,10 +32,10 @@ function FormSearchPrice(props) {
     };
 
     const handlePriceEnd = (e) => {
-        if (e.target.value <= price.start) {
+        if (e.target.value <= 1) {
             setPrice({
                 ...price,
-                end: Number(price.start) + 1
+                end: 1
             });
         } else {
             setPrice({
@@ -44,7 +47,7 @@ function FormSearchPrice(props) {
 
     const handleSubmitPrice = (e) => {
         e.preventDefault();
-        props.handleSearchPrice(price);
+        dispatch(changePriceInput(price));
     };
     return (
         <Form className="py-3" onSubmit={handleSubmitPrice}>
@@ -61,7 +64,7 @@ function FormSearchPrice(props) {
                         <Col sm={11}>
                             <Form.Control
                                 type="number"
-                                value={props.isClear ? "" : price.start}
+                                value={isClear ? "" : price.start}
                                 onChange={handlePriceStart}
                             />
                         </Col>
@@ -82,7 +85,7 @@ function FormSearchPrice(props) {
                         <Col sm={11}>
                             <Form.Control
                                 type="number"
-                                value={props.isClear ? "" : price.end}
+                                value={isClear ? "" : price.end}
                                 onChange={handlePriceEnd}
                             />
                         </Col>

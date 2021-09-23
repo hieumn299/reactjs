@@ -1,12 +1,18 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import ProductItem from "./ProductItem";
 
-function ProductList(props) {
-    const { productsWithParams } = props;
+function ProductList() {
+    const products = useSelector((state) => state.products.products);
     const renderProductItem = (data) => {
         if (data.length > 0) {
-            let result = data.map((item, index) => {
-                return <ProductItem key={index} product={item}></ProductItem>;
+            let result = data.map((item) => {
+                return (
+                    <ProductItem
+                        key={item.objectID}
+                        product={item}
+                    ></ProductItem>
+                );
             });
             return result;
         } else {
@@ -15,7 +21,7 @@ function ProductList(props) {
     };
     return (
         <div className="product-list">
-            <div className="row">{renderProductItem(productsWithParams)}</div>
+            <div className="row">{renderProductItem(products)}</div>
         </div>
     );
 }
