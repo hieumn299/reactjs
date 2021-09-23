@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
+import { useDispatch, useSelector } from "react-redux";
+import { findProduct } from "../../reducer/filter.slice";
 
-function NavbarMain(props) {
-    const [searchProduct, setSearchProduct] = useState("");
+function NavbarMain() {
+    const dispatch = useDispatch();
+    const searchTerm = useSelector((state) => state.filter.name_like);
     const handleSearchProduct = (e) => {
-        setSearchProduct(e.target.value);
-        props.handleSearchProduct(e.target.value);
+        dispatch(findProduct(e.target.value));
     };
     return (
         <header>
@@ -35,7 +37,7 @@ function NavbarMain(props) {
                             className="mr-2"
                             aria-label="Search"
                             onChange={handleSearchProduct}
-                            value={searchProduct}
+                            value={searchTerm}
                         />
                         <Button variant="outline-success">Search</Button>
                     </Form>

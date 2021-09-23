@@ -1,16 +1,21 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
+import { useDispatch, useSelector } from "react-redux";
+import { changePage } from "../../reducer/filter.slice";
 
-function Pagination(props) {
-    const { totalCount, filter } = props;
-    const totalPage = Math.ceil(totalCount / filter["_limit"]);
+function Pagination() {
+    const dispatch = useDispatch();
+    const totalProducts = useSelector((state) => state.totalPage);
+    const filter = useSelector((state) => state.filter);
+    const totalPage = Math.ceil(totalProducts.totalPage / filter._limit);
     const handlePageChange = (e) => {
-        props.handlePageChange(e.selected + 1);
+        dispatch(changePage(e.selected + 1));
     };
     return (
         <ReactPaginate
             pageCount={totalPage}
             onPageChange={handlePageChange}
+            forcePage={filter._page - 1}
         ></ReactPaginate>
     );
 }

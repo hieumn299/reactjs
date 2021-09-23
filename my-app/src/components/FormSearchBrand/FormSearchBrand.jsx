@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
+import { useDispatch, useSelector } from "react-redux";
+import { searchBrand } from "../../reducer/filter.slice";
 
-function FormSearchBrand(props) {
-    const [searchTerm, setSearchTerm] = useState("");
+function FormSearchBrand() {
+    const dispatch = useDispatch();
+    const searchTerm = useSelector((state) => state.filter.searchBrand);
     const handleSearchBrand = (e) => {
-        setSearchTerm(e.target.value);
-        props.handleSearchBrand(e.target.value);
+        dispatch(searchBrand(e.target.value));
     };
     return (
         <Form className="d-flex py-2">
